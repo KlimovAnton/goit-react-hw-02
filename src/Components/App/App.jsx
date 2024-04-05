@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Description from '../Description/Description';
 import Options from '../Options/Options'
 import Feedback from '../Feedback/Feedback';
+import Notification from '../Notification/Notification';
 
 export default function App () {
   const [reviews, setReviews] = useState({
@@ -22,12 +23,18 @@ export default function App () {
 
   const totalFeedback = goodCount + neutralCount + badCount
 
+  const positiveTotal = Math.round((goodCount / totalFeedback) * 100)
+
   return (
     <div>
       <Description />
       <Options onUpdate={updateFeedback}/>
-      <Feedback good={goodCount} neutral={neutralCount} bad={badCount} total={totalFeedback}/>
-      
+      {totalFeedback > 0 ? (
+      <Feedback good={goodCount} neutral={neutralCount} bad={badCount} total={totalFeedback} positivePercent={positiveTotal}/>
+      ) : (
+      <Notification />
+      )}
+
     </div>
   )
 }
