@@ -1,6 +1,6 @@
 import css from "./Options.module.css";
 
-export default function Options ({ onUpdate }) {
+export default function Options ({ onUpdate, onReset}) {
     return (
         <div className={css.containerBtn}>
             <button 
@@ -17,6 +17,9 @@ export default function Options ({ onUpdate }) {
                 onClick={() => {
                     onUpdate("bad");
                 }}>Bad
+            </button>
+            <button onClick={onReset}
+            >Reset 
             </button>
         </div>
     )

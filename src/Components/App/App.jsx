@@ -5,6 +5,12 @@ import Feedback from '../Feedback/Feedback';
 import Notification from '../Notification/Notification';
 
 export default function App () {
+  const [reset, setReset] = useState()
+
+  const resetClick = () => {
+    setReset()
+  }
+
   const [reviews, setReviews] = useState({
     good: 0,
     neutral: 0,
@@ -28,13 +34,12 @@ export default function App () {
   return (
     <div>
       <Description />
-      <Options onUpdate={updateFeedback}/>
+      <Options onUpdate={updateFeedback} onReset={resetClick}/>
       {totalFeedback > 0 ? (
       <Feedback good={goodCount} neutral={neutralCount} bad={badCount} total={totalFeedback} positivePercent={positiveTotal}/>
       ) : (
       <Notification />
       )}
-
     </div>
   )
 }
