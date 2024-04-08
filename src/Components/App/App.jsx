@@ -1,21 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Description from '../Description/Description';
 import Options from '../Options/Options'
 import Feedback from '../Feedback/Feedback';
 import Notification from '../Notification/Notification';
 
 export default function App () {
-  const [reset, setReset] = useState()
 
-  const resetClick = () => {
-    setReset()
-  }
+  const [reviews, setReviews] = useState(() => {
+    const savedReviews = localStorage.getItem("click-count");
+      if (savedReviews !== null) {
+        return JSON.parse(savedReviews)
+      }
+      return {
+        good: 0,
+        neutral: 0,
+        bad: 0
+      }
+    });
 
-  const [reviews, setReviews] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0
-  });
+  useEffect(() => {
+    localStorage.setItem("click-count", JSON.stringify(reviews))
+, [reviews]})
 
   const updateFeedback = feedbackType => {
     setReviews({
@@ -31,10 +36,18 @@ export default function App () {
 
   const positiveTotal = Math.round((goodCount / totalFeedback) * 100)
 
+  const resetClick = () => {
+    setReviews({
+      good: 0,
+      neutral: 0,
+      bad: 0
+  })
+  }
+
   return (
     <div>
       <Description />
-      <Options onUpdate={updateFeedback} onReset={resetClick}/>
+      <Options onUpdate={updateFeedback} onReset={resetClick} totalFeedback={totalFeedback}/>
       {totalFeedback > 0 ? (
       <Feedback good={goodCount} neutral={neutralCount} bad={badCount} total={totalFeedback} positivePercent={positiveTotal}/>
       ) : (

@@ -1,6 +1,6 @@
 import css from "./Options.module.css";
 
-export default function Options ({ onUpdate, onReset}) {
+export default function Options ({ onUpdate, onReset, totalFeedback}) {
     return (
         <div className={css.containerBtn}>
             <button 
@@ -18,9 +18,10 @@ export default function Options ({ onUpdate, onReset}) {
                     onUpdate("bad");
                 }}>Bad
             </button>
-            <button onClick={onReset}
-            >Reset 
-            </button>
+            {totalFeedback > 0 ? (
+            <button onClick={onReset}>
+                Reset 
+            </button>) : (<></>)}
         </div>
     )
 }
