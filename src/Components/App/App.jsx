@@ -31,9 +31,7 @@ export default function App () {
   const goodCount = reviews.good
   const neutralCount = reviews.neutral
   const badCount = reviews.bad
-
   const totalFeedback = goodCount + neutralCount + badCount
-
   const positiveTotal = Math.round((goodCount / totalFeedback) * 100)
 
   const resetClick = () => {
